@@ -37,11 +37,9 @@ import cn.nukkit.form.window.FormWindowCustom;
 import cn.nukkit.form.window.FormWindowModal;
 import cn.nukkit.form.window.FormWindowSimple;
 import cn.nukkit.level.biome.EnumBiome;
-import cn.nukkit.utils.TextFormat;
 import com.larryTheCoder.cache.IslandData;
 import com.larryTheCoder.cache.settings.IslandSettings;
 import com.larryTheCoder.locales.ASlocales;
-import com.larryTheCoder.player.CoopData;
 import com.larryTheCoder.schematic.SchematicHandler;
 import com.larryTheCoder.utils.Settings;
 import com.larryTheCoder.utils.SettingsFlag;
@@ -241,7 +239,8 @@ public class ServerPanel implements Listener {
                     addDeleteFormOverlay(p, resultDelete);
                 } else {
                     p.sendMessage(plugin.getLocale(p).errorFailedCritical);
-                }break;
+                }
+                break;
             case SECOND_TIME_DELETE:
                 // Check if the player closed this form
                 if (event.getWindow().wasClosed()) {
@@ -256,9 +255,9 @@ public class ServerPanel implements Listener {
                 int buttonId = modalForm.getResponse().getClickedButtonId();
                 if (buttonId == 0) {
 
-                    if (EconomyAPI.getInstance().reduceMoney(p,Settings.islandCost) == EconomyAPI.RET_SUCCESS){
+                    if (EconomyAPI.getInstance().reduceMoney(p, Settings.islandCost) == EconomyAPI.RET_SUCCESS) {
                         plugin.getIslandManager().deleteIsland(p, idButton);
-                    }else {
+                    } else {
                         p.sendMessage(plugin.getLocale(p).errorNotEnoughMoney.replace("[price]", Double.toString(Settings.islandCost)));
                     }
                 } else {
@@ -279,92 +278,92 @@ public class ServerPanel implements Listener {
                 //int buttonIds = modalFormsize.getResponse().getClickedButtonId();
                 if (buttonIds == 1) {
                     IslandData islandData = plugin.getFastCache().getIslandData(p);
-                    if (!islandData.getPlotOwner().equalsIgnoreCase(p.getName())){
-                        p.sendMessage(plugin.getPrefix()+"§cBạn phải đứng trên đảo của bạn!");
+                    if (!islandData.getPlotOwner().equalsIgnoreCase(p.getName())) {
+                        p.sendMessage(plugin.getPrefix() + "§cBạn phải đứng trên đảo của bạn!");
                         return;
                     }
-                    if (islandData != null){
+                    if (islandData != null) {
                         int size = islandData.getIsUpSize();
                         int num = (size >= 70) && (size < 100) ? 1 : -1;
-                        num = ((size >= 100) && (size < 130 )) ? 2 : num;
-                        num = ((size >= 130) && (size < 170 )) ? 3 : num;
-                        num = ((size >= 170) && (size < 200 )) ? 4 : num;
-                        num = ((size >= 200) && (size < 250 )) ? 5 : num;
-                        switch (num){
+                        num = ((size >= 100) && (size < 130)) ? 2 : num;
+                        num = ((size >= 130) && (size < 170)) ? 3 : num;
+                        num = ((size >= 170) && (size < 200)) ? 4 : num;
+                        num = ((size >= 200) && (size < 250)) ? 5 : num;
+                        switch (num) {
                             case 1:
-                                if (EconomyAPI.getInstance().reduceMoney(p,5000) == EconomyAPI.RET_SUCCESS){
+                                if (EconomyAPI.getInstance().reduceMoney(p, 5000) == EconomyAPI.RET_SUCCESS) {
                                     islandData.setIsUpSize(size + 10);
                                     islandData.saveIslandData();
                                     List<IslandData> islandList = new ArrayList<>();
                                     islandList.add(islandData);
-                                    plugin.getFastCache().saveIntoDb(p.getName(),islandList);
-                                    p.sendMessage(plugin.getPrefix()+"Upsize thành công"+ islandData.getIsUpSize());
-                                }else{
-                                    p.sendMessage(plugin.getPrefix()+"Bạn không đủ tiền up size đảo!");
+                                    plugin.getFastCache().saveIntoDb(p.getName(), islandList);
+                                    p.sendMessage(plugin.getPrefix() + "Upsize thành công" + islandData.getIsUpSize());
+                                } else {
+                                    p.sendMessage(plugin.getPrefix() + "Bạn không đủ tiền up size đảo!");
                                 }
                                 break;
                             case 2:
-                                if (p.hasPermission("is.rank.king+") || p.hasPermission("is.rank.king") || p.hasPermission("is.rank.vip+") || p.hasPermission("is.rank.vip")){
-                                    if (EconomyAPI.getInstance().reduceMoney(p,10000) == EconomyAPI.RET_SUCCESS){
+                                if (p.hasPermission("is.rank.king+") || p.hasPermission("is.rank.king") || p.hasPermission("is.rank.vip+") || p.hasPermission("is.rank.vip")) {
+                                    if (EconomyAPI.getInstance().reduceMoney(p, 10000) == EconomyAPI.RET_SUCCESS) {
                                         islandData.setIsUpSize(size + 10);
                                         islandData.saveIslandData();
                                         List<IslandData> islandList = new ArrayList<>();
                                         islandList.add(islandData);
-                                        plugin.getFastCache().saveIntoDb(p.getName(),islandList);
-                                        p.sendMessage(plugin.getPrefix()+"Upsize thành công");
-                                    }else{
-                                        p.sendMessage(plugin.getPrefix()+"Bạn không đủ tiền up size đảo!");
+                                        plugin.getFastCache().saveIntoDb(p.getName(), islandList);
+                                        p.sendMessage(plugin.getPrefix() + "Upsize thành công");
+                                    } else {
+                                        p.sendMessage(plugin.getPrefix() + "Bạn không đủ tiền up size đảo!");
                                     }
-                                }else{
-                                    p.sendMessage(plugin.getPrefix()+"Bạn phải có rank VIP");
+                                } else {
+                                    p.sendMessage(plugin.getPrefix() + "Bạn phải có rank VIP");
                                 }
                                 break;
                             case 3:
-                                if (p.hasPermission("is.rank.king+") || p.hasPermission("is.rank.king") || p.hasPermission("is.rank.vip+")){
-                                    if (EconomyAPI.getInstance().reduceMoney(p,20000) == EconomyAPI.RET_SUCCESS){
+                                if (p.hasPermission("is.rank.king+") || p.hasPermission("is.rank.king") || p.hasPermission("is.rank.vip+")) {
+                                    if (EconomyAPI.getInstance().reduceMoney(p, 20000) == EconomyAPI.RET_SUCCESS) {
                                         islandData.setIsUpSize(size + 10);
                                         islandData.saveIslandData();
                                         List<IslandData> islandList = new ArrayList<>();
                                         islandList.add(islandData);
-                                        plugin.getFastCache().saveIntoDb(p.getName(),islandList);
-                                        p.sendMessage(plugin.getPrefix()+"Upsize thành công");
-                                    }else{
-                                        p.sendMessage(plugin.getPrefix()+"Bạn không đủ tiền up size đảo!");
+                                        plugin.getFastCache().saveIntoDb(p.getName(), islandList);
+                                        p.sendMessage(plugin.getPrefix() + "Upsize thành công");
+                                    } else {
+                                        p.sendMessage(plugin.getPrefix() + "Bạn không đủ tiền up size đảo!");
                                     }
-                                }else{
-                                    p.sendMessage(plugin.getPrefix()+"Bạn phải có rank VIP+");
+                                } else {
+                                    p.sendMessage(plugin.getPrefix() + "Bạn phải có rank VIP+");
                                 }
                                 break;
                             case 4:
-                                if (p.hasPermission("is.rank.king+") || p.hasPermission("is.rank.king")){
-                                    if (RootCore.get().getRootPointManager().reduceRootPoint(p,10) == 1){
+                                if (p.hasPermission("is.rank.king+") || p.hasPermission("is.rank.king")) {
+                                    if (RootCore.get().getRootPointManager().reduceRootPoint(p, 10) == 1) {
                                         islandData.setIsUpSize(size + 10);
                                         islandData.saveIslandData();
                                         List<IslandData> islandList = new ArrayList<>();
                                         islandList.add(islandData);
-                                        plugin.getFastCache().saveIntoDb(p.getName(),islandList);
-                                        p.sendMessage(plugin.getPrefix()+"Upsize thành công");
-                                    }else{
-                                        p.sendMessage(plugin.getPrefix()+"Bạn không đủ tiền up size đảo!");
+                                        plugin.getFastCache().saveIntoDb(p.getName(), islandList);
+                                        p.sendMessage(plugin.getPrefix() + "Upsize thành công");
+                                    } else {
+                                        p.sendMessage(plugin.getPrefix() + "Bạn không đủ tiền up size đảo!");
                                     }
-                                }else{
-                                    p.sendMessage(plugin.getPrefix()+"Bạn phải có rank KING");
+                                } else {
+                                    p.sendMessage(plugin.getPrefix() + "Bạn phải có rank KING");
                                 }
                                 break;
                             case 5:
-                                if (p.hasPermission("is.rank.king+")){
-                                    if (RootCore.get().getRootPointManager().reduceRootPoint(p,20) == 1){
+                                if (p.hasPermission("is.rank.king+")) {
+                                    if (RootCore.get().getRootPointManager().reduceRootPoint(p, 20) == 1) {
                                         islandData.setIsUpSize(size + 10);
                                         islandData.saveIslandData();
                                         List<IslandData> islandList = new ArrayList<>();
                                         islandList.add(islandData);
-                                        plugin.getFastCache().saveIntoDb(p.getName(),islandList);
-                                        p.sendMessage(plugin.getPrefix()+"Upsize thành công");
-                                    }else{
-                                        p.sendMessage(plugin.getPrefix()+"Bạn không đủ tiền up size đảo!");
+                                        plugin.getFastCache().saveIntoDb(p.getName(), islandList);
+                                        p.sendMessage(plugin.getPrefix() + "Upsize thành công");
+                                    } else {
+                                        p.sendMessage(plugin.getPrefix() + "Bạn không đủ tiền up size đảo!");
                                     }
-                                }else{
-                                    p.sendMessage(plugin.getPrefix()+"Bạn phải có rank KING+");
+                                } else {
+                                    p.sendMessage(plugin.getPrefix() + "Bạn phải có rank KING+");
                                 }
                                 break;
                             case -1:
@@ -383,7 +382,7 @@ public class ServerPanel implements Listener {
                     break;
                 }
                 plugin.getTManager().getPlayerCoop(p.getName()).removeMembers(p.getName());
-                p.sendMessage(plugin.getPrefix()+ " Bạn đã rời khỏi Team COOP SkyBlock. Chơi lại từ đầu hoặc tham gia team khác nha !");
+                p.sendMessage(plugin.getPrefix() + " Bạn đã rời khỏi Team COOP SkyBlock. Chơi lại từ đầu hoặc tham gia team khác nha !");
                 break;
             case SECOND_TIME_PROTECTION:
                 if (event.getWindow().wasClosed()) {
@@ -474,10 +473,10 @@ public class ServerPanel implements Listener {
     private void addDeleteFormOverlay(Player p, IslandData pd) {
         if (pd == null) {
             List<IslandData> islandData = plugin.getFastCache().getIslandsFrom(p.getName());
-            if (islandData.size() == 1){
+            if (islandData.size() == 1) {
                 addDeleteFormOverlay(p, islandData.get(0));
-            }else{
-                p.sendMessage(plugin.getPrefix()+"Bạn không là chủ đảo nào !");
+            } else {
+                p.sendMessage(plugin.getPrefix() + "Bạn không là chủ đảo nào !");
             }
             return;
         }
@@ -490,10 +489,8 @@ public class ServerPanel implements Listener {
     }
 
 
-
-
     public void upSize(Player p) {
-        upSize(p,null);
+        upSize(p, null);
     }
 
     private void upSize(Player p, IslandData pd) {
@@ -507,7 +504,7 @@ public class ServerPanel implements Listener {
             p.sendMessage("Có lỗi xảy ra");
             return;
         }
-        String text = "§l§eSize của bạn là: §6"+pd.getIsUpSize()+"x"+pd.getIsUpSize()
+        String text = "§l§eSize của bạn là: §6" + pd.getIsUpSize() + "x" + pd.getIsUpSize()
                 + "\n\n§eSizeUP: §f10block 4 hướng"
                 + "\n\n§eSize từ 70-100:"
                 + "\n\n §8+ §fGiá: 5000coin"
@@ -526,10 +523,11 @@ public class ServerPanel implements Listener {
                 + "\n\n §8+ §fYêu cầu: KING+";
         FormWindowCustom confirm = new FormWindowCustom("UpSize");
         confirm.addElement(new ElementLabel(text));
-        confirm.addElement(new ElementStepSlider("Lựa chọn", Arrays.asList("Không","upsize")));
+        confirm.addElement(new ElementStepSlider("Lựa chọn", Arrays.asList("Không", "upsize")));
         int id = p.showFormWindow(confirm);
         panelDataId.put(id, PanelType.IS_UPSIZE);
     }
+
     public void quitCoopIsland(Player p) {
         FormWindowModal confirm = new FormWindowModal("Quit", "Rời khỏi team CO-OP ? Bạn sẽ phải chơi lại từ đầu. ", "§cXác nhận", "Hủy");
 

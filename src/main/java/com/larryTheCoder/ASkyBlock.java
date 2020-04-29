@@ -10,10 +10,6 @@ import cn.nukkit.Server;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.generator.Generator;
-import cn.nukkit.nbt.tag.CompoundTag;
-import cn.nukkit.nbt.tag.DoubleTag;
-import cn.nukkit.nbt.tag.FloatTag;
-import cn.nukkit.nbt.tag.ListTag;
 import cn.nukkit.plugin.PluginManager;
 import cn.nukkit.scheduler.ServerScheduler;
 import cn.nukkit.utils.Config;
@@ -42,26 +38,16 @@ import com.larryTheCoder.player.TeleportLogic;
 import com.larryTheCoder.schematic.SchematicHandler;
 import com.larryTheCoder.task.LevelCalcTask;
 import com.larryTheCoder.task.TaskManager;
-import com.larryTheCoder.updater.Updater;
 import com.larryTheCoder.utils.ConfigManager;
 import com.larryTheCoder.utils.Settings;
 import com.larryTheCoder.utils.Utils;
-import java.io.File;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Properties;
-
-import gt.creeperface.holograms.Hologram;
-import gt.creeperface.holograms.api.HologramAPI;
-import gt.creeperface.holograms.entity.HologramEntity;
 import org.sql2o.Query;
 import org.sql2o.data.Table;
 
-import static com.larryTheCoder.database.TableSet.FETCH_ISLAND_PLOT;
+import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.*;
 
 public class ASkyBlock extends ASkyBlockAPI {
     private static ASkyBlock object;
@@ -129,7 +115,7 @@ public class ASkyBlock extends ASkyBlockAPI {
             }
 
             try {
-                this.database = new DatabaseManager((AbstractConfig)dbConfig);
+                this.database = new DatabaseManager((AbstractConfig) dbConfig);
                 return true;
             } catch (ClassNotFoundException | SQLException var4) {
                 var4.printStackTrace();
@@ -181,10 +167,6 @@ public class ASkyBlock extends ASkyBlockAPI {
     private void registerObject() {
         Utils.send(TextFormat.GRAY + "Loading all island framework. Please wait...");
         this.schematics = new SchematicHandler(this, new File(this.getDataFolder(), "schematics"));
-        if (Settings.checkUpdate) {
-            Updater.getUpdate();
-        }
-
         this.islandManager = new IslandManager(this);
         this.grid = new GridManager(this);
         this.tManager = new TeamManager(this);
@@ -266,8 +248,8 @@ public class ASkyBlock extends ASkyBlockAPI {
             ArrayList<WorldSettings> settings = new ArrayList();
             Iterator var13 = levels.iterator();
 
-            while(var13.hasNext()) {
-                String levelName = (String)var13.next();
+            while (var13.hasNext()) {
+                String levelName = (String) var13.next();
                 String levelSafeName = levelName.replace(" ", "_");
                 Utils.loadLevelSeed(levelName);
                 Level level = this.getServer().getLevelByName(levelName);
@@ -295,7 +277,7 @@ public class ASkyBlock extends ASkyBlockAPI {
     }
 
     public WorldSettings getSettings(String levelName) {
-        return (WorldSettings)this.level.stream().filter((i) -> {
+        return (WorldSettings) this.level.stream().filter((i) -> {
             return i.getLevelName().equalsIgnoreCase(levelName);
         }).findFirst().orElse(null);
     }
@@ -305,7 +287,7 @@ public class ASkyBlock extends ASkyBlockAPI {
     }
 
     public ASlocales getLocale(CommandSender sender) {
-        return sender.isPlayer() ? this.getLocale((Player)sender) : this.getLocale("");
+        return sender.isPlayer() ? this.getLocale((Player) sender) : this.getLocale("");
     }
 
     public ASlocales getLocale(Player p) {
@@ -314,7 +296,7 @@ public class ASkyBlock extends ASkyBlockAPI {
 
     public ASlocales getLocale(String p) {
         //if (p == null || p.isEmpty()) {
-            return getAvailableLocales().get(Settings.defaultLanguage);
+        return getAvailableLocales().get(Settings.defaultLanguage);
         //}
         //return getAvailableLocales().get(getFastCache().getDefaultLocale(p));
     }
@@ -331,8 +313,8 @@ public class ASkyBlock extends ASkyBlockAPI {
                 try {
                     Iterator var3 = this.level.iterator();
 
-                    while(var3.hasNext()) {
-                        WorldSettings settings = (WorldSettings)var3.next();
+                    while (var3.hasNext()) {
+                        WorldSettings settings = (WorldSettings) var3.next();
                         queue.addParameter("levelName", settings.getLevelName());
                         queue.executeUpdate();
                     }
@@ -371,8 +353,8 @@ public class ASkyBlock extends ASkyBlockAPI {
         ArrayList<String> level = new ArrayList();
         Iterator var2 = this.level.iterator();
 
-        while(var2.hasNext()) {
-            WorldSettings settings = (WorldSettings)var2.next();
+        while (var2.hasNext()) {
+            WorldSettings settings = (WorldSettings) var2.next();
             level.add(settings.getLevelName());
         }
 
