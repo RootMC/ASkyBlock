@@ -68,11 +68,6 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-			<groupId>me.lucko.luckperms</groupId>
-			<artifactId>luckperms-api</artifactId>
-			<version>4.3</version>
-		</dependency>
-        <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20160810</version>
@@ -81,11 +76,6 @@
             <groupId>rootmc.net</groupId>
             <artifactId>RootCore</artifactId>
             <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>gt.creeperface.nukkit</groupId>
-            <artifactId>holograms</artifactId>
-            <version>1.0</version>
         </dependency>
     </dependencies>
 

@@ -110,7 +110,7 @@ public class InvitationHandler {
      * @param receiver The receiver of the invitation
      */
     public void addInvitation(CommandSender sender, Player receiver) {
-        sender.sendMessage(plugin.getPrefix() + plugin.getLocale(sender.isPlayer() ? (Player) sender : null).inviteSuccess);
+        sender.sendMessage(plugin.getPrefix() + plugin.getLocale(sender.isPlayer() ? (Player) sender : null).inviteSuccess.replace("[player]",receiver.getName()));
         receiver.sendMessage(plugin.getPrefix() + plugin.getLocale(receiver).newInvitation.replace("[player]", sender.getName()));
 
         // Add into the list.
