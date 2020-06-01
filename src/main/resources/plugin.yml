@@ -105,9 +105,6 @@ permissions:
   is.mod.bypasslock:
     default: op
     description: "Bypass the island Lock settings"
-  is.craft.enderchest:
-    default: op
-    description: "Bypass the enderchest usage"
   is.bypass.wait:
     default: op
     description: "Bypass the reset timer"

@@ -71,7 +71,6 @@ public class ASkyBlock extends ASkyBlockAPI {
         if (object == null) {
             object = this;
         }
-
         this.initConfig();
         Generator.addGenerator(SkyBlockGenerator.class, "island", 132824063);
         TaskManager.IMP = new TaskManager();
@@ -83,19 +82,17 @@ public class ASkyBlock extends ASkyBlockAPI {
             this.getServer().getLogger().info(this.getPrefix() + "§7Loading ASkyBlock - Bedrock Edition (API 30)");
             this.initIslands();
             this.registerObject();
-            this.getServer().getLogger().info(this.getPrefix() + "§aASkyBlock has been successfully enabled!");
         }
     }
 
     public void onDisable() {
-        Utils.send("&7Saving all island framework...");
+        Utils.send("&7Saving all island data...");
         this.saveLevel(true);
         this.getFastCache().shutdownCache();
         this.getDatabase().shutdownDB();
         this.getMessages().saveMessages();
         TopTen.topTenSave();
         this.getTManager().saveData();
-        Utils.send("&cASkyBlock has been successfully disabled. Goodbye!");
     }
 
     public Config getConfig() {
@@ -141,27 +138,6 @@ public class ASkyBlock extends ASkyBlockAPI {
         pm.registerEvents(new LavaCheck(this), this);
         pm.registerEvents(new PlayerEvent(this), this);
         ServerScheduler pd = this.getServer().getScheduler();
-        pd.scheduleRepeatingTask(new PluginTask(this), 20);
-    }
-
-    private void initGitCheckup() {
-        Properties properties = new Properties();
-
-        try {
-            properties.load(this.getResource("git-sb.properties"));
-        } catch (IOException var3) {
-            this.getServer().getLogger().info("§cERROR! We cannot load the git loader for this ASkyBlock build!");
-            return;
-        }
-
-        Utils.sendDebug("§7ASkyBlock Git Information:");
-        Utils.sendDebug("§7Build number: " + properties.getProperty("git.commit.id.describe", ""));
-        Utils.sendDebug("§7Commit number: " + properties.getProperty("git.commit.id"));
-        this.pluginGit = properties;
-    }
-
-    public Properties getGitInfo() {
-        return this.pluginGit;
     }
 
     private void registerObject() {
@@ -174,7 +150,6 @@ public class ASkyBlock extends ASkyBlockAPI {
     }
 
     private void initConfig() {
-        this.initGitCheckup();
         Utils.EnsureDirectory(Utils.DIRECTORY);
         Utils.EnsureDirectory(Utils.LOCALES_DIRECTORY);
         Utils.EnsureDirectory(Utils.SCHEMATIC_DIRECTORY);
@@ -196,7 +171,7 @@ public class ASkyBlock extends ASkyBlockAPI {
 
     private void recheck() {
         File file = new File(get().getDataFolder(), "config.yml");
-        Config config = new Config(file, 2);
+        Config config = new Config(file, Config.YAML);
         if (!Utils.isNumeric(config.get("version")) || config.getInt("version", 0) < 1) {
             file.renameTo(new File(get().getDataFolder(), "config.old"));
             get().saveResource("config.yml");
@@ -272,10 +247,6 @@ public class ASkyBlock extends ASkyBlockAPI {
         });
     }
 
-    public boolean isDebug() {
-        return this.cfg.getBoolean("debug");
-    }
-
     public WorldSettings getSettings(String levelName) {
         return (WorldSettings) this.level.stream().filter((i) -> {
             return i.getLevelName().equalsIgnoreCase(levelName);
@@ -338,7 +309,7 @@ public class ASkyBlock extends ASkyBlockAPI {
                 Utils.send("&cUnable to save the world.");
             }
 
-        });
+        })          ;
     }
 
     public HashMap<String, ASlocales> getAvailableLocales() {

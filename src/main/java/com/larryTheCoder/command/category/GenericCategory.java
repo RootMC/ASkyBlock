@@ -77,7 +77,7 @@ public class GenericCategory extends SubCategory {
             case "protection":
                 return "Thay đổi cài đặt bảo vệ đảo của bạn.";
             case "settings":
-                return "CThay đổi cài đặt ưu tiên đảo của bạn.";
+                return "Thay đổi cài đặt khóa đảo.";
             case "top":
                 return "Hiển thị mười đảo hàng đầu với điểm cao nhất.";
             default:

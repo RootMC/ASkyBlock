@@ -58,7 +58,6 @@ public class IslandCategory extends SubCategory {
             case "upsize":
             case "info":
             case "calc":
-                //case "create":
                 return sender.hasPermission("is.create") && sender.isPlayer();
             case "reset":
                 return sender.hasPermission("is.command.reset") && sender.isPlayer();
